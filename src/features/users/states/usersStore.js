@@ -41,6 +41,13 @@ export const useUsersStore = defineStore('users', () => {
     user.value = null
   }
 
+  function clearState() {
+    users.value = []
+    user.value = null
+    profile.value = null
+    message.value = ''
+  }
+
   async function requestProfile() {
     const response = await getProfile()
     if (isApiSuccess(response)) {
@@ -109,6 +116,7 @@ export const useUsersStore = defineStore('users', () => {
     fetchUsers,
     selectUser,
     clearUser,
+    clearState,
     fetchProfile,
     updateProfile,
     changePhoto,

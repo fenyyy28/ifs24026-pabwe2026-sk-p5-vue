@@ -255,3 +255,20 @@ describe('changePassword', () => {
     expect(store.message).toBe('Gagal mengubah kata sandi')
   })
 })
+
+describe('clearState', () => {
+  it('mengosongkan semua data pengguna', () => {
+    const store = useUsersStore()
+    store.users = [{ id: 1 }]
+    store.user = { id: 1 }
+    store.profile = { id: 1 }
+    store.message = 'Pesan lama'
+
+    store.clearState()
+
+    expect(store.users).toEqual([])
+    expect(store.user).toBeNull()
+    expect(store.profile).toBeNull()
+    expect(store.message).toBe('')
+  })
+})

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
+    "@toast-ui/editor": "^3.2.2",
     "lucide-vue-next": "^1.0.0",
     "pinia": "^4.0.3",
     "sweetalert2": "^11.26.25",
