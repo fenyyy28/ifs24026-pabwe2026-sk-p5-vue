@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => {
         provider: 'v8',
         reporter: ['text', 'html'],
         include: ['src/**/*.{js,vue}'],
-        exclude: ['src/main.js'],
+        exclude: ['src/main.js', 'src/**/*.test.js'],
         thresholds: {
           statements: 100,
           branches: 100,
