@@ -5,6 +5,7 @@ import {
   removeAccessToken,
   buildUrl,
   apiRequest,
+  isApiSuccess,
 } from './apiHelper'
 
 const fetchMock = vi.fn()
@@ -107,5 +108,19 @@ describe('apiRequest', () => {
 
     expect(result.status).toBe('fail')
     expect(result.message).toBe('Terjadi kesalahan saat menghubungi server')
+  })
+})
+
+describe('isApiSuccess', () => {
+  it('mengenali format status "success"', () => {
+    expect(isApiSuccess({ status: 'success' })).toBe(true)
+  })
+
+  it('mengenali format success: true', () => {
+    expect(isApiSuccess({ success: true })).toBe(true)
+  })
+
+  it('menganggap selain itu gagal', () => {
+    expect(isApiSuccess({ status: 'fail' })).toBe(false)
   })
 })

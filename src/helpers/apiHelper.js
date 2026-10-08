@@ -66,4 +66,7 @@ export async function apiRequest(
       message: 'Terjadi kesalahan saat menghubungi server',
     }
   }
+}/** Mengecek apakah respons API menandakan keberhasilan. */
+export function isApiSuccess(response) {
+  return response.status === 'success' || response.success === true
 }
