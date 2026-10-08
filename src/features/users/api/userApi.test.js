@@ -44,12 +44,21 @@ describe('userApi', () => {
     expect(options.body.get('photo').name).toBe('a.png')
   })
 
-  it('putPassword hanya mengirim password', async () => {
-    await putPassword({ password: 'rahasia1', ekstra: 'diabaikan' })
+    it('putPassword mengirim kata sandi lama, baru, dan konfirmasi', async () => {
+    await putPassword({
+      password: 'lama123',
+      newPassword: 'rahasia1',
+      newPasswordConfirmation: 'rahasia1',
+      ekstra: 'diabaikan',
+    })
 
-    expect(apiRequest).toHaveBeenCalledWith('/users/me/password', {
+    expect(apiRequest).toHaveBeenCalledWith('/users/password', {
       method: 'PUT',
-      body: { password: 'rahasia1' },
+      body: {
+        password: 'lama123',
+        new_password: 'rahasia1',
+        new_password_confirmation: 'rahasia1',
+      },
     })
   })
 })

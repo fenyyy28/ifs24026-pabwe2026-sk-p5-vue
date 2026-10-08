@@ -139,41 +139,54 @@ describe('ubah profil', () => {
 })
 
 describe('ganti kata sandi', () => {
+  async function fillPasswords(wrapper, { current, next, confirm }) {
+    await wrapper.find('#current-password').setValue(current)
+    await wrapper.find('#new-password').setValue(next)
+    await wrapper.find('#confirm-password').setValue(confirm)
+  }
+
   it('menolak form kosong', async () => {
     const wrapper = await mountPage()
 
     await wrapper.find('#password-form').trigger('submit')
 
+    expect(wrapper.text()).toContain('Kata sandi saat ini wajib diisi')
     expect(wrapper.text()).toContain('Kata sandi wajib diisi')
     expect(wrapper.text()).toContain('Konfirmasi kata sandi wajib diisi')
     expect(putPassword).not.toHaveBeenCalled()
   })
 
   it('mengganti kata sandi lalu mengosongkan form', async () => {
-    putPassword.mockResolvedValue({ status: 'success', message: 'Berhasil mengubah data' })
+    putPassword.mockResolvedValue({
+      status: 'success',
+      message: 'Berhasil mengubah kata sandi',
+    })
     const wrapper = await mountPage()
 
-    await wrapper.find('#new-password').setValue('rahasia1')
-    await wrapper.find('#confirm-password').setValue('rahasia1')
+    await fillPasswords(wrapper, { current: 'lama123', next: 'rahasia1', confirm: 'rahasia1' })
     await wrapper.find('#password-form').trigger('submit')
     await flushPromises()
 
-    expect(putPassword).toHaveBeenCalledWith({ password: 'rahasia1' })
-    expect(showSuccessDialog).toHaveBeenCalledWith('Berhasil mengubah data')
+    expect(putPassword).toHaveBeenCalledWith({
+      password: 'lama123',
+      newPassword: 'rahasia1',
+      newPasswordConfirmation: 'rahasia1',
+    })
+    expect(showSuccessDialog).toHaveBeenCalledWith('Berhasil mengubah kata sandi')
+    expect(wrapper.find('#current-password').element.value).toBe('')
     expect(wrapper.find('#new-password').element.value).toBe('')
     expect(wrapper.find('#confirm-password').element.value).toBe('')
   })
 
   it('menampilkan dialog error saat gagal', async () => {
-    putPassword.mockResolvedValue({ status: 'fail', message: 'Kata sandi terlalu lemah' })
+    putPassword.mockResolvedValue({ status: 'fail', message: 'Kata sandi lama salah' })
     const wrapper = await mountPage()
 
-    await wrapper.find('#new-password').setValue('rahasia1')
-    await wrapper.find('#confirm-password').setValue('rahasia1')
+    await fillPasswords(wrapper, { current: 'salah', next: 'rahasia1', confirm: 'rahasia1' })
     await wrapper.find('#password-form').trigger('submit')
     await flushPromises()
 
-    expect(showErrorDialog).toHaveBeenCalledWith('Kata sandi terlalu lemah')
+    expect(showErrorDialog).toHaveBeenCalledWith('Kata sandi lama salah')
     expect(wrapper.find('#new-password').element.value).toBe('rahasia1')
   })
 })
@@ -184,7 +197,10 @@ describe('ganti foto', () => {
     const input = wrapper.find('input[type="file"]')
     const clickSpy = vi.spyOn(input.element, 'click').mockImplementation(() => {})
 
-    await wrapper.findAll('button').find((b) => b.text().includes('Ganti foto')).trigger('click')
+    await wrapper
+      .findAll('button')
+      .find((button) => button.text().includes('Ganti foto'))
+      .trigger('click')
 
     expect(clickSpy).toHaveBeenCalled()
   })

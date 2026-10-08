@@ -22,9 +22,13 @@ export function postPhoto(file) {
   return apiRequest('/users/me/photo', { method: 'POST', body: form })
 }
 
-export function putPassword({ password }) {
-  return apiRequest('/users/me/password', {
+export function putPassword({ password, newPassword, newPasswordConfirmation }) {
+  return apiRequest('/users/password', {
     method: 'PUT',
-    body: { password },
+    body: {
+      password,
+      new_password: newPassword,
+      new_password_confirmation: newPasswordConfirmation,
+    },
   })
 }

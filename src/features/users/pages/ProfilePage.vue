@@ -21,6 +21,11 @@ const fileInput = ref(null)
 const { value: name, handleChange: onNameChange } = useInput()
 const { value: email, handleChange: onEmailChange } = useInput()
 const {
+  value: currentPassword,
+  handleChange: onCurrentPasswordChange,
+  reset: resetCurrentPassword,
+} = useInput()
+const {
   value: newPassword,
   handleChange: onNewPasswordChange,
   reset: resetNewPassword,
@@ -32,7 +37,11 @@ const {
 } = useInput()
 
 const profileErrors = reactive({ name: '', email: '' })
-const passwordErrors = reactive({ password: '', confirmPassword: '' })
+const passwordErrors = reactive({
+  currentPassword: '',
+  password: '',
+  confirmPassword: '',
+})
 
 function syncForm() {
   name.value = store.profile.name
@@ -68,20 +77,29 @@ async function handleProfileSubmit() {
 }
 
 async function handlePasswordSubmit() {
+  passwordErrors.currentPassword = validateRequired(
+    currentPassword.value,
+    'Kata sandi saat ini',
+  )
   passwordErrors.password = validatePassword(newPassword.value)
   passwordErrors.confirmPassword = validateConfirmPassword(
     newPassword.value,
     confirmPassword.value,
   )
-  if (passwordErrors.password || passwordErrors.confirmPassword) return
+  if (Object.values(passwordErrors).some(Boolean)) return
 
-  const isSuccess = await store.changePassword({ password: newPassword.value })
+  const isSuccess = await store.changePassword({
+    password: currentPassword.value,
+    newPassword: newPassword.value,
+    newPasswordConfirmation: confirmPassword.value,
+  })
 
   if (!isSuccess) {
     await showErrorDialog(store.message)
     return
   }
 
+  resetCurrentPassword()
   resetNewPassword()
   resetConfirmPassword()
   await showSuccessDialog(store.message)
@@ -197,6 +215,17 @@ async function handlePhotoChange(event) {
         @submit.prevent="handlePasswordSubmit"
       >
         <h2 class="text-base font-semibold text-slate-900">Ganti kata sandi</h2>
+        <AuthField
+          id="current-password"
+          label="Kata sandi saat ini"
+          type="password"
+          placeholder="Masukkan kata sandi saat ini"
+          autocomplete="current-password"
+          :icon="Lock"
+          :value="currentPassword"
+          :error="passwordErrors.currentPassword"
+          @input="onCurrentPasswordChange"
+        />
         <AuthField
           id="new-password"
           label="Kata sandi baru"
