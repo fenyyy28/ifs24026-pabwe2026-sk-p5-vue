@@ -29,8 +29,8 @@ vi.mock('../../../helpers/toolsHelper', () => ({
 const mountPage = () => mount(LoginPage, { global: { plugins: [createPinia()] } })
 
 async function fill(wrapper, email, password) {
-  await wrapper.find('#email').setValue(email)
-  await wrapper.find('#password').setValue(password)
+  await wrapper.find('#login-email-input').setValue(email)
+  await wrapper.find('#login-password-input').setValue(password)
 }
 
 beforeEach(() => {
@@ -45,6 +45,14 @@ describe('LoginPage', () => {
     expect(wrapper.text()).toContain('Selamat datang kembali')
     expect(wrapper.find('button[type="submit"]').text()).toBe('Masuk')
     expect(wrapper.find('a').attributes('href')).toBe('/auth/register')
+  })
+
+    it('memakai id elemen yang konsisten untuk pengecekan otomatis', () => {
+    const wrapper = mountPage()
+
+    expect(wrapper.find('#login-email-input').exists()).toBe(true)
+    expect(wrapper.find('#login-password-input').exists()).toBe(true)
+    expect(wrapper.find('button#login-submit-button').exists()).toBe(true)
   })
 
   it('menampilkan error saat form kosong', async () => {

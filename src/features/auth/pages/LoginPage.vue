@@ -43,7 +43,7 @@ async function handleSubmit() {
   >
     <form class="space-y-5" novalidate @submit.prevent="handleSubmit">
       <AuthField
-        id="email"
+        id="login-email-input"
         label="Email"
         type="email"
         placeholder="nama@email.com"
@@ -54,7 +54,7 @@ async function handleSubmit() {
         @input="onEmailChange"
       />
       <AuthField
-        id="password"
+        id="login-password-input"
         label="Kata sandi"
         type="password"
         placeholder="Masukkan kata sandi"
@@ -66,6 +66,7 @@ async function handleSubmit() {
       />
 
       <button
+        id="login-submit-button"
         type="submit"
         :disabled="auth.isLoading"
         class="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
