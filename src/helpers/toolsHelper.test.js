@@ -22,7 +22,12 @@ describe('dialog', () => {
       title: 'Berhasil',
       text: 'Tersimpan',
     })
-      it('showSuccessDialog tampil sebagai toast yang menutup otomatis', () => {
+
+    showSuccessDialog('Tersimpan', 'Sukses')
+    expect(Swal.fire.mock.calls[1][0].title).toBe('Sukses')
+  })
+
+  it('showSuccessDialog tampil sebagai toast yang menutup otomatis', () => {
     showSuccessDialog('Tersimpan')
 
     expect(Swal.fire.mock.calls[0][0]).toMatchObject({
@@ -31,10 +36,6 @@ describe('dialog', () => {
       showConfirmButton: false,
       timer: 2500,
     })
-  })
-
-    showSuccessDialog('Tersimpan', 'Sukses')
-    expect(Swal.fire.mock.calls[1][0].title).toBe('Sukses')
   })
 
   it('showErrorDialog dengan judul default dan kustom', () => {
