@@ -23,11 +23,12 @@ export default defineConfig(({ mode }) => {
     test: {
       globals: true,
       environment: 'jsdom',
+      setupFiles: ['./src/setupTests.js'],
       coverage: {
         provider: 'v8',
         reporter: ['text', 'html'],
         include: ['src/**/*.{js,vue}'],
-        exclude: ['src/main.js', 'src/**/*.test.js'],
+        exclude: ['src/main.js', 'src/setupTests.js', 'src/**/*.test.js'],
         thresholds: {
           statements: 100,
           branches: 100,
