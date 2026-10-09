@@ -19,9 +19,27 @@ beforeEach(() => {
 describe('token', () => {
   it('menyimpan, membaca, dan menghapus token', () => {
     expect(getAccessToken()).toBeNull()
+
     putAccessToken('abc')
     expect(getAccessToken()).toBe('abc')
+    expect(document.cookie).toContain('accessToken=abc')
+
     removeAccessToken()
+    expect(getAccessToken()).toBeNull()
+    expect(document.cookie).not.toContain('accessToken')
+  })
+
+  it('membaca token dari cookie jika localStorage kosong', () => {
+    document.cookie = 'lain=1; path=/'
+    document.cookie = 'accessToken=abc%20def; path=/'
+
+    expect(localStorage.getItem('accessToken')).toBeNull()
+    expect(getAccessToken()).toBe('abc def')
+  })
+
+  it('mengembalikan null jika cookie token tidak ada', () => {
+    document.cookie = 'lain=1; path=/'
+
     expect(getAccessToken()).toBeNull()
   })
 })

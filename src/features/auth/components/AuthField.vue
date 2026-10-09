@@ -1,6 +1,7 @@
 <script setup>
 defineProps({
   id: { type: String, required: true },
+  name: { type: String, default: '' },
   label: { type: String, required: true },
   icon: { type: [Object, Function], required: true },
   type: { type: String, default: 'text' },
@@ -23,6 +24,7 @@ defineEmits(['input'])
       />
       <input
         :id="id"
+        :name="name"
         :type="type"
         :value="value"
         :placeholder="placeholder"

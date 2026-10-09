@@ -46,6 +46,17 @@ describe('LoginPage', () => {
     expect(wrapper.find('button[type="submit"]').text()).toBe('Masuk')
     expect(wrapper.find('a').attributes('href')).toBe('/auth/register')
   })
+    it('membaca nilai langsung dari form meski diisi tanpa event input', async () => {
+    postLogin.mockResolvedValue({ status: 'fail', message: 'x' })
+    const wrapper = mountPage()
+
+    wrapper.find('#login-email-input').element.value = 'a@b.co'
+    wrapper.find('#login-password-input').element.value = 'rahasia'
+    await wrapper.find('form').trigger('submit')
+    await flushPromises()
+
+    expect(postLogin).toHaveBeenCalledWith({ email: 'a@b.co', password: 'rahasia' })
+  })
 
     it('memakai id elemen yang konsisten untuk pengecekan otomatis', () => {
     const wrapper = mountPage()

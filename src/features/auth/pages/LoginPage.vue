@@ -12,11 +12,25 @@ import { showErrorDialog, showSuccessDialog } from '../../../helpers/toolsHelper
 const router = useRouter()
 const auth = useAuthStore()
 
-const { value: email, handleChange: onEmailChange } = useInput()
-const { value: password, handleChange: onPasswordChange } = useInput()
+const { value: email } = useInput()
+const { value: password } = useInput()
 const errors = reactive({ email: '', password: '' })
 
-async function handleSubmit() {
+function onEmailChange(event) {
+  email.value = event.target.value
+}
+
+function onPasswordChange(event) {
+  password.value = event.target.value
+}
+
+async function handleSubmit(event) {
+  // Ambil nilai langsung dari form, agar tetap benar meski kolom
+  // diisi tanpa memicu event "input" (misalnya oleh alat pengujian).
+  const form = new FormData(event.target)
+  email.value = form.get('email')
+  password.value = form.get('password')
+
   errors.email = validateEmail(email.value)
   errors.password = validateRequired(password.value, 'Kata sandi')
   if (errors.email || errors.password) return
@@ -31,7 +45,7 @@ async function handleSubmit() {
     return
   }
 
-   await router.push('/')
+  await router.push('/')
   showSuccessDialog(auth.message)
 }
 </script>
@@ -44,6 +58,7 @@ async function handleSubmit() {
     <form class="space-y-5" novalidate @submit.prevent="handleSubmit">
       <AuthField
         id="login-email-input"
+        name="email"
         label="Email"
         type="email"
         placeholder="nama@email.com"
@@ -55,6 +70,7 @@ async function handleSubmit() {
       />
       <AuthField
         id="login-password-input"
+        name="password"
         label="Kata sandi"
         type="password"
         placeholder="Masukkan kata sandi"

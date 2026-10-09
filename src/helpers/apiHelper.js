@@ -1,15 +1,26 @@
 const ACCESS_TOKEN_KEY = 'accessToken'
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 7
+
+function readCookie(name) {
+  const match = document.cookie
+    .split('; ')
+    .find((item) => item.startsWith(`${name}=`))
+
+  return match ? decodeURIComponent(match.slice(name.length + 1)) : null
+}
 
 export function getAccessToken() {
-  return localStorage.getItem(ACCESS_TOKEN_KEY)
+  return localStorage.getItem(ACCESS_TOKEN_KEY) ?? readCookie(ACCESS_TOKEN_KEY)
 }
 
 export function putAccessToken(token) {
   localStorage.setItem(ACCESS_TOKEN_KEY, token)
+  document.cookie = `${ACCESS_TOKEN_KEY}=${encodeURIComponent(token)}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax`
 }
 
 export function removeAccessToken() {
   localStorage.removeItem(ACCESS_TOKEN_KEY)
+  document.cookie = `${ACCESS_TOKEN_KEY}=; path=/; max-age=0; SameSite=Lax`
 }
 
 /**
@@ -66,7 +77,9 @@ export async function apiRequest(
       message: 'Terjadi kesalahan saat menghubungi server',
     }
   }
-}/** Mengecek apakah respons API menandakan keberhasilan. */
+}
+
+/** Mengecek apakah respons API menandakan keberhasilan. */
 export function isApiSuccess(response) {
   return response.status === 'success' || response.success === true
 }
