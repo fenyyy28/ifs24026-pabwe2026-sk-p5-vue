@@ -31,8 +31,8 @@ async function handleSubmit() {
     return
   }
 
-  await showSuccessDialog(auth.message)
-  router.push('/')
+   await router.push('/')
+  showSuccessDialog(auth.message)
 }
 </script>
 

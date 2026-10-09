@@ -7,7 +7,11 @@ export function showSuccessDialog(message, title = 'Berhasil') {
     icon: 'success',
     title,
     text: message,
-    confirmButtonColor: PRIMARY_COLOR,
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 2500,
+    timerProgressBar: true,
   })
 }
 
