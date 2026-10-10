@@ -11,6 +11,34 @@
     />
     <title>Delcom Auction</title>
 
+    <style>
+      html,
+      body {
+        margin: 0;
+      }
+      .boot {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background: #f8fafc;
+        color: #0f172a;
+        font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+      }
+      .boot h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+      .boot p {
+        margin: 0;
+        font-size: 0.875rem;
+        color: #475569;
+      }
+    </style>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -27,7 +55,12 @@
     </noscript>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <main class="boot">
+        <h1>Delcom Auction</h1>
+        <p>Memuat aplikasi...</p>
+      </main>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

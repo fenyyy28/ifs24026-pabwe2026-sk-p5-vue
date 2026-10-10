@@ -330,7 +330,7 @@ onMounted(() => {
 
           <div
             v-else
-            class="flex h-full items-center justify-center text-sm text-slate-400"
+            class="flex h-full items-center justify-center text-sm text-slate-600"
           >
             Tidak ada cover
           </div>
@@ -340,7 +340,7 @@ onMounted(() => {
             :class="
               isClosed(item)
                 ? 'bg-slate-800 text-white'
-                : 'bg-emerald-500 text-white'
+                : 'bg-emerald-700 text-white'
             "
           >
             {{

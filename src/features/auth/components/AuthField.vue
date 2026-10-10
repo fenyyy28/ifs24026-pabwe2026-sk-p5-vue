@@ -20,7 +20,7 @@ defineEmits(['input'])
     <div class="relative mt-1.5">
       <component
         :is="icon"
-        class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400"
+        class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-600"
       />
       <input
         :id="id"
@@ -30,7 +30,7 @@ defineEmits(['input'])
         :placeholder="placeholder"
         :autocomplete="autocomplete"
         :aria-invalid="Boolean(error)"
-        class="w-full rounded-xl border bg-white py-2.5 pl-10 pr-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:ring-2"
+        class="w-full rounded-xl border bg-white py-2.5 pl-10 pr-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-600 focus:ring-2"
         :class="
           error
             ? 'border-rose-400 focus:ring-rose-200'
