@@ -1,14 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { getAccessToken } from './helpers/apiHelper'
+import LoginPage from './features/auth/pages/LoginPage.vue'
+import RegisterPage from './features/auth/pages/RegisterPage.vue'
+import NotFoundPage from './features/common/pages/NotFoundPage.vue'
 
-const LoginPage = () => import('./features/auth/pages/LoginPage.vue')
-const RegisterPage = () => import('./features/auth/pages/RegisterPage.vue')
+// Halaman dashboard dimuat bertahap karena lebih berat (editor markdown, modal).
 const AucationLayout = () => import('./features/aucations/layouts/AucationLayout.vue')
 const HomePage = () => import('./features/aucations/pages/HomePage.vue')
 const DetailPage = () => import('./features/aucations/pages/DetailPage.vue')
 const UsersPage = () => import('./features/users/pages/UsersPage.vue')
 const ProfilePage = () => import('./features/users/pages/ProfilePage.vue')
-const NotFoundPage = () => import('./features/common/pages/NotFoundPage.vue')
 
 export const routes = [
   {

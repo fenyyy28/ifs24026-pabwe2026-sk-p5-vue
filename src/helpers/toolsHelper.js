@@ -1,8 +1,10 @@
-import Swal from 'sweetalert2'
-
 const PRIMARY_COLOR = '#4f46e5'
 
-export function showSuccessDialog(message, title = 'Berhasil') {
+// SweetAlert2 dimuat saat pertama dipakai agar tidak membebani muatan awal halaman.
+const loadSwal = () => import('sweetalert2').then((module) => module.default)
+
+export async function showSuccessDialog(message, title = 'Berhasil') {
+  const Swal = await loadSwal()
   return Swal.fire({
     icon: 'success',
     title,
@@ -15,7 +17,8 @@ export function showSuccessDialog(message, title = 'Berhasil') {
   })
 }
 
-export function showErrorDialog(message, title = 'Gagal') {
+export async function showErrorDialog(message, title = 'Gagal') {
+  const Swal = await loadSwal()
   return Swal.fire({
     icon: 'error',
     title,
@@ -29,6 +32,7 @@ export async function showConfirmDialog(
   message,
   { title = 'Apakah Anda yakin?', confirmText = 'Ya', cancelText = 'Batal' } = {},
 ) {
+  const Swal = await loadSwal()
   const result = await Swal.fire({
     icon: 'question',
     title,

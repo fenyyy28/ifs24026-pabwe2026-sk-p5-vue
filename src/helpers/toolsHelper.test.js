@@ -15,20 +15,20 @@ beforeEach(() => {
 })
 
 describe('dialog', () => {
-  it('showSuccessDialog dengan judul default dan kustom', () => {
-    showSuccessDialog('Tersimpan')
+  it('showSuccessDialog dengan judul default dan kustom', async () => {
+    await showSuccessDialog('Tersimpan')
     expect(Swal.fire.mock.calls[0][0]).toMatchObject({
       icon: 'success',
       title: 'Berhasil',
       text: 'Tersimpan',
     })
 
-    showSuccessDialog('Tersimpan', 'Sukses')
+    await showSuccessDialog('Tersimpan', 'Sukses')
     expect(Swal.fire.mock.calls[1][0].title).toBe('Sukses')
   })
 
-  it('showSuccessDialog tampil sebagai toast yang menutup otomatis', () => {
-    showSuccessDialog('Tersimpan')
+  it('showSuccessDialog tampil sebagai toast yang menutup otomatis', async () => {
+    await showSuccessDialog('Tersimpan')
 
     expect(Swal.fire.mock.calls[0][0]).toMatchObject({
       toast: true,
@@ -38,15 +38,15 @@ describe('dialog', () => {
     })
   })
 
-  it('showErrorDialog dengan judul default dan kustom', () => {
-    showErrorDialog('Ada masalah')
+  it('showErrorDialog dengan judul default dan kustom', async () => {
+    await showErrorDialog('Ada masalah')
     expect(Swal.fire.mock.calls[0][0]).toMatchObject({
       icon: 'error',
       title: 'Gagal',
       text: 'Ada masalah',
     })
 
-    showErrorDialog('Ada masalah', 'Oops')
+    await showErrorDialog('Ada masalah', 'Oops')
     expect(Swal.fire.mock.calls[1][0].title).toBe('Oops')
   })
 
