@@ -1,13 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { getAccessToken } from './helpers/apiHelper'
-import LoginPage from './features/auth/pages/LoginPage.vue'
-import RegisterPage from './features/auth/pages/RegisterPage.vue'
-import AucationLayout from './features/aucations/layouts/AucationLayout.vue'
-import HomePage from './features/aucations/pages/HomePage.vue'
-import DetailPage from './features/aucations/pages/DetailPage.vue'
-import UsersPage from './features/users/pages/UsersPage.vue'
-import ProfilePage from './features/users/pages/ProfilePage.vue'
-import NotFoundPage from './features/common/pages/NotFoundPage.vue'
+
+const LoginPage = () => import('./features/auth/pages/LoginPage.vue')
+const RegisterPage = () => import('./features/auth/pages/RegisterPage.vue')
+const AucationLayout = () => import('./features/aucations/layouts/AucationLayout.vue')
+const HomePage = () => import('./features/aucations/pages/HomePage.vue')
+const DetailPage = () => import('./features/aucations/pages/DetailPage.vue')
+const UsersPage = () => import('./features/users/pages/UsersPage.vue')
+const ProfilePage = () => import('./features/users/pages/ProfilePage.vue')
+const NotFoundPage = () => import('./features/common/pages/NotFoundPage.vue')
 
 export const routes = [
   {
@@ -44,7 +45,7 @@ export const routes = [
 ]
 
 /**
- * Penjaga rute berdasarkan token di localStorage:
+ * Penjaga rute berdasarkan token (localStorage atau cookie):
  * - halaman terproteksi butuh token, jika tidak diarahkan ke login
  * - halaman tamu (login/register) tidak untuk yang sudah login
  */

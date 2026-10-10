@@ -3,14 +3,14 @@ import { mount } from '@vue/test-utils'
 import UserAvatar from './UserAvatar.vue'
 
 describe('UserAvatar', () => {
-  it('menampilkan gambar jika foto tersedia', () => {
+  it('menampilkan gambar dekoratif jika foto tersedia', () => {
     const wrapper = mount(UserAvatar, {
       props: { name: 'Feny Pasaribu', photo: 'https://x.test/a.png' },
     })
 
     const img = wrapper.find('img')
     expect(img.attributes('src')).toBe('https://x.test/a.png')
-    expect(img.attributes('alt')).toBe('Feny Pasaribu')
+    expect(img.attributes('alt')).toBe('')
   })
 
   it('menampilkan inisial jika foto kosong atau null', () => {

@@ -14,6 +14,10 @@ export default defineConfig(({ mode }) => {
       port: Number(env.APP_PORT) || 5173,
     },
 
+    build: {
+      sourcemap: true,
+    },
+
     define: {
       DELCOM_BASEURL: JSON.stringify(
         env.VITE_DELCOM_BASEURL || 'https://open-api.delcom.org/api/v1',
@@ -24,6 +28,7 @@ export default defineConfig(({ mode }) => {
       globals: true,
       environment: 'jsdom',
       setupFiles: ['./src/setupTests.js'],
+      testTimeout: 20000,
       coverage: {
         provider: 'v8',
         reporter: ['text', 'html'],

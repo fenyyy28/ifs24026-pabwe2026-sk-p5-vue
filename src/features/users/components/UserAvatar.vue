@@ -23,7 +23,7 @@ watch(
   <img
     v-if="src && !hasError"
     :src="src"
-    :alt="name"
+    alt=""
     class="shrink-0 rounded-full object-cover ring-2 ring-white"
     :class="sizeClass"
     @error="hasError = true"
