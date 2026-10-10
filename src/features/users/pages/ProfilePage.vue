@@ -163,7 +163,9 @@ async function handlePhotoChange(event) {
             Ganti foto
           </button>
           <input
+            id="photo-input"
             ref="fileInput"
+            name="photo"
             type="file"
             accept="image/*"
             class="hidden"

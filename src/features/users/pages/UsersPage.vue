@@ -44,6 +44,7 @@ onMounted(async () => {
         />
         <input
           id="keyword"
+          name="keyword"
           type="search"
           :value="keyword"
           placeholder="Cari nama atau email"
